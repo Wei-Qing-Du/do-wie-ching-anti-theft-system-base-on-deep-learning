@@ -1,0 +1,4 @@
+DFace:MTCNN:
+	https://github.com/kuaikuaikim/DFace
+XceptionTraining:
+	https://github.com/ivallesp/Xception1d

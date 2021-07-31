@@ -1,0 +1,6 @@
+About DFace:
+	Problem 1 :OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized.
+	Fix way 1 : https://blog.csdn.net/qq_45266796/article/details/109028605
+
+	Problem 2:Float problem and  negative dimensions are not allowed
+	https://blog.csdn.net/hhy_csdn/article/details/82287905 and https://github.com/kuaikuaikim/DFace/issues/30

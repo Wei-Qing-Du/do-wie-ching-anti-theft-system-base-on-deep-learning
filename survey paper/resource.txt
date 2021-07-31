@@ -1,0 +1,2 @@
+https://blog.gtwang.org/iot/raspberry-pi/how-to-diy-home-alarm-system-with-raspberry-pi-and-webcam/--自製智慧型監視器，自動遠端通報系統
+https://haoyu.love/blog509.html-->raspberry pi 使用 pytorch
