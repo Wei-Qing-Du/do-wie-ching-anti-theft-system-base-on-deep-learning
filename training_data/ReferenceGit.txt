@@ -1,4 +1,6 @@
 DFace:MTCNN:
 	https://github.com/kuaikuaikim/DFace
-XceptionTraining:
-	https://github.com/ivallesp/Xception1d
+Pytorch-cifar100:
+	https://github.com/weiaicunzai/pytorch-cifar100
+Pytorch_To_ONNX:
+https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html
