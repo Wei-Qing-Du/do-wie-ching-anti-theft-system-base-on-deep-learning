@@ -4,15 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Anti_thief.Controllers
+namespace WebApplication1.Controllers
 {
-    public class CmeraControllers : Controller
+    public class HomeController : Controller
     {
-        [Route("")]
-        [Route("Cmera/Capture")]
-        public IActionResult Capture()
+        public IActionResult Index()
         {
-            
             return View();
         }
     }

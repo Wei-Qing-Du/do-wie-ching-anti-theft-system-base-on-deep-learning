@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Anti_thief.Controllers
 {
-    public class HomeController : Controller
+    public class CmeraControllers : Controller
     {
-        public IActionResult Index()
+        [HttpPost]
+        public IActionResult Capture()
         {
+
             return View();
         }
     }

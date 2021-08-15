@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anti-thief", "Anti-thief.csproj", "{C42340E6-256E-436E-9716-C73CE711E1DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1.csproj", "{7589EF7F-309A-4705-ADEE-5B17BCB253E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C42340E6-256E-436E-9716-C73CE711E1DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C42340E6-256E-436E-9716-C73CE711E1DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C42340E6-256E-436E-9716-C73CE711E1DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C42340E6-256E-436E-9716-C73CE711E1DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7589EF7F-309A-4705-ADEE-5B17BCB253E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7589EF7F-309A-4705-ADEE-5B17BCB253E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7589EF7F-309A-4705-ADEE-5B17BCB253E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7589EF7F-309A-4705-ADEE-5B17BCB253E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F1EEF5B2-E9EE-42CE-B085-1E9BD7414058}
+		SolutionGuid = {72A44B1D-5094-45B3-8584-4624E12CC34C}
 	EndGlobalSection
 EndGlobal
