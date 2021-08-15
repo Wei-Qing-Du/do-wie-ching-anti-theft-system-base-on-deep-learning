@@ -1,0 +1,2 @@
+Build camera foe asp:
+https://www.c-sharpcorner.com/article/capturing-image-from-web-cam-in-asp-net-core-mvc/

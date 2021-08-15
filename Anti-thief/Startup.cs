@@ -49,7 +49,7 @@ namespace Anti_thief
             app.UseEndpoints(routes =>
             {
                 routes.MapControllerRoute(name: "default",
-                   pattern: "{controller=Catch}/{action=Index}/{id?}");
+                   pattern: "{controller=Cmera}/{action=Capture}/{id?}");
             });
         }
     }
