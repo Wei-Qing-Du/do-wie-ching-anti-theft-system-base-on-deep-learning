@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Anti_thief.Models;
+using Anti_thief.Data;
 
 namespace Anti_thief
 {
@@ -24,6 +27,8 @@ namespace Anti_thief
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddDbContextPool<RecordbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,10 +51,12 @@ namespace Anti_thief
 
             app.UseAuthorization();
 
+            app.UseDataInitializer();
+
             app.UseEndpoints(routes =>
             {
                 routes.MapControllerRoute(name: "default",
-                   pattern: "{controller=Cmera}/{action=Capture}/{id?}");
+                   pattern: "{controller=Camera}/{action=CaptureIndex}/{id?}");
             });
         }
     }
