@@ -16,19 +16,21 @@ namespace Anti_thief
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddEntityFrameworkSqlServer();
             services.AddDbContextPool<RecordbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IRecorderRepository, SQLrcorderRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +60,7 @@ namespace Anti_thief
                 routes.MapControllerRoute(name: "default",
                    pattern: "{controller=Camera}/{action=CaptureIndex}/{id?}");
             });
+
         }
     }
 }

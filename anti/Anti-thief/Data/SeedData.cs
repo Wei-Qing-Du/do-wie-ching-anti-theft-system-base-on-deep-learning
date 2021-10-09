@@ -22,7 +22,7 @@ namespace Anti_thief.Data
                 System.Console.WriteLine("开始执行迁移数据库...");
 
                 dbcontext.Database.Migrate();
-                System.Console.WriteLine("数据库迁移完成...");
+                System.Console.WriteLine("ssssssssssssssssssssssssssssssssssss...");
 
                 if (!dbcontext.Recorder.Any())
                 {
@@ -35,6 +35,8 @@ namespace Anti_thief.Data
                         RecordDate = DateTime.Now
                 }) ; 
                 }
+
+                dbcontext.SaveChanges();
 
                 return builder;
             }

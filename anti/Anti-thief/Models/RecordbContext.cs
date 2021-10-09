@@ -8,7 +8,7 @@ namespace Anti_thief.Models
 {
     public class RecordbContext : DbContext
     {
-        public RecordbContext(DbContextOptions<DbContext> options) : base(options)
+        public RecordbContext(DbContextOptions options) : base(options)
         {
         }
 
