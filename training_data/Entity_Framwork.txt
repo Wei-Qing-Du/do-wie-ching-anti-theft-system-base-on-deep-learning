@@ -1,0 +1,2 @@
+1.Create localbd that references: https://www.itread01.com/content/1542877573.html
+2.Enable-Migrations-->Add-Migration(first time)-->Update-Database that references: https://www.entityframeworktutorial.net/code-first/code-based-migration-in-code-first.aspx
