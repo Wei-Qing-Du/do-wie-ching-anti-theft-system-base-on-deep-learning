@@ -1,0 +1,2 @@
+We used github opensource
+https://github.com/michaltkacz/camera-capture
