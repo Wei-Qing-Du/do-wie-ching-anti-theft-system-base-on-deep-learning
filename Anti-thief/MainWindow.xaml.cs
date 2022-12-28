@@ -97,6 +97,16 @@ namespace WpfCamera
 			}
 		}
 
+		private async void Show_Click(object sender, RoutedEventArgs e)
+        {
+			ShowData showData = new ShowData();
+
+			App.Current.MainWindow = showData;
+
+			this.Close();
+
+			showData.Show();
+        }
 		private async void Photo_Click(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
