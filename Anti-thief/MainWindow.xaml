@@ -11,7 +11,7 @@
 	<Grid>
 		<xamlhost:WindowsXamlHost x:Name="XamlHost" Margin="0 0 0 40"  />
 
-		<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
+        <StackPanel  Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
 			<Button Content="Photo" Margin="10" Click="Photo_Click" />
 			<Button Content="Video" Margin="10" Click="Video_Click"/>
 			<Button Content="Audio" Margin="10" Click="Audio_Click"/>

@@ -98,9 +98,9 @@ namespace WpfCamera
 		}
 
 		private async void Show_Click(object sender, RoutedEventArgs e)
-        {
-			ShowData showData = new ShowData();
-
+		{
+			ShowDataWindow showData = new ShowDataWindow();
+				
 			App.Current.MainWindow = showData;
 
 			this.Close();
