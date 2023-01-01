@@ -19,7 +19,8 @@ namespace WpfCamera
         {
             InitializeComponent();
             items = new List<ListResult>();
-            items.Add(new ListResult { Time = DateTime.Now.ToString(), Detect = "Yes" });
+            items.Add(new ListResult { Time = DateTime.Now.ToString(), Detect = "Yes", Intruder = "No" });
+            items.Add(new ListResult { Time = DateTime.Now.ToString(), Detect = "Yes", Intruder = "Yes" });
             DataContext = this;
         }
     }
@@ -29,5 +30,6 @@ namespace WpfCamera
         public string Time { get; set; }
 
         public string Detect { get; set; }
+        public string Intruder { get; set; }
     }
 }

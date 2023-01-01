@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter.cs" />
     <Compile Include="ShowDataWindow.xaml.cs">
       <DependentUpon>ShowDataWindow.xaml</DependentUpon>
     </Compile>
