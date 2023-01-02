@@ -41,7 +41,7 @@
         <ListView x:Name="lvResults"  ItemContainerStyle="{StaticResource StyleListView}" ItemsSource="{Binding items}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn>
+                    <GridViewColumn Header="Time">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

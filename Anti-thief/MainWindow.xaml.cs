@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using Windows.Devices.Enumeration;
@@ -20,9 +25,10 @@ namespace WpfCamera
 		private readonly CaptureElement _captureElement;
 		private StorageFolder _captureFolder;
 		private bool _initialized = false;
-		private bool _isRecording = false;
 
-		public MainWindow()
+        public Bitmap bmp { get; private set; }
+
+        public MainWindow()
 		{
 			InitializeComponent();
 
@@ -73,89 +79,57 @@ namespace WpfCamera
 			}
 		}
 
-		private async void Video_Click(object sender, RoutedEventArgs e)
-		{
-			if (!_initialized)
-			{
-				return;
-			}
+        private void Show_Click(object sender, RoutedEventArgs e)
+        {
+            ShowDataWindow showData = new ShowDataWindow();
 
-			if (_isRecording)
-			{ // stop recording
-				_isRecording = false;
-				await _mediaCapture.StopRecordAsync();
-			}
-			else
-			{ // start recording
-				var videoFile = await _captureFolder.CreateFileAsync("Video.wmv", CreationCollisionOption.GenerateUniqueName);
+            App.Current.MainWindow = showData;
 
-				var encodingProfile = MediaEncodingProfile.CreateWmv(VideoEncodingQuality.Auto);
+            this.Close();
 
-				await _mediaCapture.StartRecordToStorageFileAsync(encodingProfile, videoFile);
-
-				_isRecording = true;
-			}
-		}
-
-		private async void Show_Click(object sender, RoutedEventArgs e)
-		{
-			ShowDataWindow showData = new ShowDataWindow();
-				
-			App.Current.MainWindow = showData;
-
-			this.Close();
-
-			showData.Show();
+            showData.Show();
         }
-		private async void Photo_Click(object sender, RoutedEventArgs e)
+        private async void Photo_Click(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
 			{
 				return;
 			}
-
-			using var stream = new InMemoryRandomAccessStream();
-
-			await _mediaCapture.CapturePhotoToStreamAsync(ImageEncodingProperties.CreateJpeg(), stream);
 
 			try
 			{
-				var file = await _captureFolder.CreateFileAsync("Photo.jpg", CreationCollisionOption.GenerateUniqueName);
+				// Prepare and capture photo
+				var lowLagCapture = await _mediaCapture.PrepareLowLagPhotoCaptureAsync(ImageEncodingProperties.CreateUncompressed(MediaPixelFormat.Bgra8));
 
-				var decoder = await BitmapDecoder.CreateAsync(stream);
+				var capturedPhoto = await lowLagCapture.CaptureAsync();
+				var softwareBitmap = capturedPhoto.Frame.SoftwareBitmap;
 
-				using var outputStream = await file.OpenAsync(FileAccessMode.ReadWrite);
-				var encoder = await BitmapEncoder.CreateForTranscodingAsync(outputStream, decoder);
-
-				await encoder.FlushAsync();
+				using (var stream = new Windows.Storage.Streams.InMemoryRandomAccessStream())
+				{
+					BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+					encoder.SetSoftwareBitmap(softwareBitmap);
+					await encoder.FlushAsync();
+					bmp = new System.Drawing.Bitmap(stream.AsStream());
+				}
+					await lowLagCapture.FinishAsync();
+#if false
+				string filePath = @"C:\Users\Willy\Desktop\MyImage.png";
+				bmp.Save(filePath, ImageFormat.Png);
+#endif
+				ProcessImage(bmp);
 			}
 			catch (Exception)
 			{
 			}
 		}
 
-		private async void Audio_Click(object sender, RoutedEventArgs e)
+		private void ProcessImage(Bitmap bmp)
 		{
-			if (!_initialized)
-			{
-				return;
-			}
-
-			if (_isRecording)
-			{ // stop recording
-				_isRecording = false;
-				await _mediaCapture.StopRecordAsync();
-			}
-			else
-			{ // start recording
-				var audioFile = await _captureFolder.CreateFileAsync("Audio.mp3", CreationCollisionOption.GenerateUniqueName);
-
-				var encodingProfile = MediaEncodingProfile.CreateMp3(AudioEncodingQuality.Medium);
-
-				await _mediaCapture.StartRecordToStorageFileAsync(encodingProfile, audioFile);
-
-				_isRecording = true;
-			}
+			var img2 = new Image<Gray, byte>(bmp);
+#if false
+			CvInvoke.Imshow("My Window", img2);
+			CvInvoke.WaitKey();
+#endif
 		}
 	}
 }
