@@ -25,8 +25,10 @@ namespace WpfCamera
 		private readonly CaptureElement _captureElement;
 		private StorageFolder _captureFolder;
 		private bool _initialized = false;
+		private ShowDataWindow _showData = new ShowDataWindow();
 
-        public Bitmap bmp { get; private set; }
+
+		public Bitmap bmp { get; private set; }
 
         public MainWindow()
 		{
@@ -81,13 +83,11 @@ namespace WpfCamera
 
         private void Show_Click(object sender, RoutedEventArgs e)
         {
-            ShowDataWindow showData = new ShowDataWindow();
-
-            App.Current.MainWindow = showData;
+            App.Current.MainWindow = _showData;
 
             this.Close();
 
-            showData.Show();
+			_showData.Show();
         }
         private async void Photo_Click(object sender, RoutedEventArgs e)
 		{
@@ -118,16 +118,38 @@ namespace WpfCamera
 #endif
 				ProcessImage(bmp);
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+				MessageBox.Show(ex.Message);
 			}
 		}
 
 		private void ProcessImage(Bitmap bmp)
 		{
-			var img2 = new Image<Gray, byte>(bmp);
+			DirectoryInfo dir = new DirectoryInfo(System.Windows.Forms.Application.StartupPath);
+			string currentPath = dir.Parent.Parent.Parent.FullName;
+			currentPath += @"\DetectData\haarcascade_frontalface_alt.xml";
+
+			CvInvoke.UseOpenCL = CvInvoke.HaveOpenCLCompatibleGpuDevice;
+			var faceCascade = new CascadeClassifier(currentPath);
+			var img = new Image<Bgr, byte>(bmp);
+			var img2 = new Image<Gray, byte>(img.ToBitmap());
+			CvInvoke.EqualizeHist(img2, img2);
+			var faces = faceCascade.DetectMultiScale(img2, 1.1, 10, new System.Drawing.Size(80, 80));
+
+			foreach (var face in faces)
+			{
+				int x = face.X;
+				int y = face.Y;
+				int w = face.Width;
+				int h = face.Height;
+
+				Rectangle rect = new Rectangle(x, y, w, h);
+				MCvScalar color = new MCvScalar(0, 0, 255);
+				CvInvoke.Rectangle(img, rect, color, 5);
+			}
 #if false
-			CvInvoke.Imshow("My Window", img2);
+			CvInvoke.Imshow("My Window", img);
 			CvInvoke.WaitKey();
 #endif
 		}
