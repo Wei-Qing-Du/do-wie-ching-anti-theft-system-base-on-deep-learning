@@ -12,8 +12,8 @@
 		<xamlhost:WindowsXamlHost x:Name="XamlHost" Margin="0 0 0 40"  />
 
         <StackPanel  Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
-            <Button Content="Photo" Margin="10" Click="Photo_Click" />
-            <Button Content="ShowData" Margin="10" Click="Show_Click"/>
+            <Button x:Name="Photo_BTN" Content="Photo" Margin="10" Click="Photo_Click" />
+            <Button  Content="ShowData" Margin="10" Click="Show_Click"/>
             <Image x:Name="image" />
         </StackPanel>
 	</Grid>

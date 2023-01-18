@@ -26,7 +26,11 @@ namespace WpfCamera
 		private StorageFolder _captureFolder;
 		private bool _initialized = false;
 		private ShowDataWindow _showData = new ShowDataWindow();
-
+		public ShowDataWindow ShowData
+			{
+				get { return _showData; }
+            }
+		public static bool Show = false;
 
 		public Bitmap bmp { get; private set; }
 
@@ -89,7 +93,7 @@ namespace WpfCamera
 
 			_showData.Show();
         }
-        private async void Photo_Click(object sender, RoutedEventArgs e)
+        private async void Photo_Click(object sender, RoutedEventArgs e) 
 		{
 			if (!_initialized)
 			{
@@ -112,7 +116,7 @@ namespace WpfCamera
 					bmp = new System.Drawing.Bitmap(stream.AsStream());
 				}
 					await lowLagCapture.FinishAsync();
-#if false
+#if Show
 				string filePath = @"C:\Users\Willy\Desktop\MyImage.png";
 				bmp.Save(filePath, ImageFormat.Png);
 #endif
@@ -127,7 +131,7 @@ namespace WpfCamera
 		private void ProcessImage(Bitmap bmp)
 		{
 			DirectoryInfo dir = new DirectoryInfo(System.Windows.Forms.Application.StartupPath);
-			string currentPath = dir.Parent.Parent.Parent.FullName;
+			string currentPath = dir.Parent.Parent.FullName;
 			currentPath += @"\DetectData\haarcascade_frontalface_alt.xml";
 
 			CvInvoke.UseOpenCL = CvInvoke.HaveOpenCLCompatibleGpuDevice;
@@ -137,6 +141,23 @@ namespace WpfCamera
 			CvInvoke.EqualizeHist(img2, img2);
 			var faces = faceCascade.DetectMultiScale(img2, 1.1, 10, new System.Drawing.Size(80, 80));
 
+			string strDetect = "No";
+			string strIntruder = "No";
+
+			if (faces.Length > 0)
+            {
+				strDetect = "Yes";
+				strIntruder = "No";
+			}
+			else
+            {
+				strDetect = "No";
+				strIntruder = "No";
+			}
+
+			_showData.items.Add(new ListResult { Time = DateTime.Now.ToString(), Detect = strDetect, Intruder = strIntruder });
+			_showData.AddData2DataBase();
+#if Show
 			foreach (var face in faces)
 			{
 				int x = face.X;
@@ -148,7 +169,7 @@ namespace WpfCamera
 				MCvScalar color = new MCvScalar(0, 0, 255);
 				CvInvoke.Rectangle(img, rect, color, 5);
 			}
-#if false
+
 			CvInvoke.Imshow("My Window", img);
 			CvInvoke.WaitKey();
 #endif
