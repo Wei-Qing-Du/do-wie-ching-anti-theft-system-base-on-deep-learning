@@ -46,6 +46,8 @@ namespace WpfCamera
                 MessageBox.Show(ex.Message);
             } 
         }
+
+       
     }
 
     public class ListResult

@@ -1,8 +1,5 @@
-﻿using Emgu.CV;
-using Emgu.CV.Structure;
-using System;
+﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -11,7 +8,6 @@ using Windows.Graphics.Imaging;
 using Windows.Media.Capture;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 
 namespace WpfCamera
@@ -120,43 +116,23 @@ namespace WpfCamera
 				string filePath = @"C:\Users\Willy\Desktop\MyImage.png";
 				bmp.Save(filePath, ImageFormat.Png);
 #endif
-				ProcessImage(bmp);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message);
-			}
-		}
 
-		private void ProcessImage(Bitmap bmp)
-		{
-			DirectoryInfo dir = new DirectoryInfo(System.Windows.Forms.Application.StartupPath);
-			string currentPath = dir.Parent.Parent.FullName;
-			currentPath += @"\DetectData\haarcascade_frontalface_alt.xml";
+				string strDetect = "No";
+				string strIntruder = "No";
 
-			CvInvoke.UseOpenCL = CvInvoke.HaveOpenCLCompatibleGpuDevice;
-			var faceCascade = new CascadeClassifier(currentPath);
-			var img = new Image<Bgr, byte>(bmp);
-			var img2 = new Image<Gray, byte>(img.ToBitmap());
-			CvInvoke.EqualizeHist(img2, img2);
-			var faces = faceCascade.DetectMultiScale(img2, 1.1, 10, new System.Drawing.Size(80, 80));
+				if (ProcessIMG.ProcessImage(bmp))
+				{
+					strDetect = "Yes";
+					strIntruder = "No";
+				}
+				else
+				{
+					strDetect = "No";
+					strIntruder = "No";
+				}
 
-			string strDetect = "No";
-			string strIntruder = "No";
-
-			if (faces.Length > 0)
-            {
-				strDetect = "Yes";
-				strIntruder = "No";
-			}
-			else
-            {
-				strDetect = "No";
-				strIntruder = "No";
-			}
-
-			_showData.items.Add(new ListResult { Time = DateTime.Now.ToString(), Detect = strDetect, Intruder = strIntruder });
-			_showData.AddData2DataBase();
+				_showData.items.Add(new ListResult { Time = DateTime.Now.ToString(), Detect = strDetect, Intruder = strIntruder });
+				_showData.AddData2DataBase();
 #if Show
 			foreach (var face in faces)
 			{
@@ -173,6 +149,11 @@ namespace WpfCamera
 			CvInvoke.Imshow("My Window", img);
 			CvInvoke.WaitKey();
 #endif
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 	}
 }
