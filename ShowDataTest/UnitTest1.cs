@@ -18,7 +18,7 @@ namespace ShowDataTest
         public void Test1()
         {
 
-            DirectoryInfo dir = new DirectoryInfo(System.Windows.Forms.Application.StartupPath);
+            DirectoryInfo dir = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);
             string currentPath = dir.Parent.Parent.FullName;
             currentPath += @"\TestData\Test.jpg";
 
