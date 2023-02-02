@@ -26,7 +26,6 @@ namespace WpfCamera
 			{
 				get { return _showData; }
             }
-		public static bool Show = false;
 
 		public Bitmap bmp { get; private set; }
 
@@ -112,10 +111,6 @@ namespace WpfCamera
 					bmp = new System.Drawing.Bitmap(stream.AsStream());
 				}
 					await lowLagCapture.FinishAsync();
-#if Show
-				string filePath = @"C:\Users\Willy\Desktop\MyImage.png";
-				bmp.Save(filePath, ImageFormat.Png);
-#endif
 
 				string strDetect = "No";
 				string strIntruder = "No";
@@ -133,22 +128,6 @@ namespace WpfCamera
 
 				_showData.items.Add(new ListResult { Time = DateTime.Now.ToString(), Detect = strDetect, Intruder = strIntruder });
 				_showData.AddData2DataBase();
-#if Show
-			foreach (var face in faces)
-			{
-				int x = face.X;
-				int y = face.Y;
-				int w = face.Width;
-				int h = face.Height;
-
-				Rectangle rect = new Rectangle(x, y, w, h);
-				MCvScalar color = new MCvScalar(0, 0, 255);
-				CvInvoke.Rectangle(img, rect, color, 5);
-			}
-
-			CvInvoke.Imshow("My Window", img);
-			CvInvoke.WaitKey();
-#endif
 			}
 			catch (Exception ex)
 			{
